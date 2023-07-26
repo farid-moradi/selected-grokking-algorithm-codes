@@ -52,8 +52,6 @@ func binarySearch(list []int, n int) (item int, try int, err error) {
 	}
 
 	for low <= high {
-		// fmt.Println(mid, low, high)
-		// time.Sleep(1 * time.Second)
 		mid = (low + high) / 2
 		try++
 		if list[mid] == n {
@@ -68,8 +66,6 @@ func binarySearch(list []int, n int) (item int, try int, err error) {
 			err = errors.New("internal error")
 			return
 		}
-		// look how stupid was your first solution!
-		// i = low + (high-low)/2 + 1
 	}
 
 	return -1, try, errDidntFindIt
