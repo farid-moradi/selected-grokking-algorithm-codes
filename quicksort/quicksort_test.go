@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestXxx(t *testing.T) {
+func TestQuickSort(t *testing.T) {
 	list := make([]int, 100)
 	for i := range list {
 		list[i] = rand.Int() % 100
