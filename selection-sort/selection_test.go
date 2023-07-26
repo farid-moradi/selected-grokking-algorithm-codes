@@ -51,7 +51,7 @@ func TestSelectionSort(t *testing.T) {
 
 	for i, v := range list {
 		if v != checkList[i] {
-			log.Fatalln("expected these 2 would be the same", list, checkList)
+			log.Fatalln("expected these 2 to be the same", list, checkList)
 		}
 	}
 }
