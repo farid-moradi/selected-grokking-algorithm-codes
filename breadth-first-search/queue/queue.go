@@ -8,11 +8,11 @@ import (
 const MAXIMUM_QUEUE_LENGTH = 100
 
 type node struct {
-	s    string
+	s    interface{}
 	next *node
 }
 
-func newNode(s string) *node {
+func newNode(s interface{}) *node {
 	node := new(node)
 	node.s = s
 	node.next = nil
@@ -33,7 +33,7 @@ func Init() *queue {
 	return q
 }
 
-func (q *queue) EnQueue(s string) {
+func (q *queue) EnQueue(s interface{}) {
 	n := newNode(s)
 	if q.head == nil {
 		q.head = n
@@ -44,7 +44,7 @@ func (q *queue) EnQueue(s string) {
 	q.tail = n
 }
 
-func (q *queue) DeQueue() (s string, err error) {
+func (q *queue) DeQueue() (s interface{}, err error) {
 	if q.head == nil {
 		err = errors.New("can not dequeue and empty queue")
 		return
@@ -65,7 +65,7 @@ func (q *queue) Length() int {
 	return i
 }
 
-func (q *queue) Search(s string) bool {
+func (q *queue) Search(s interface{}) bool {
 	h := q.head
 	for h != nil {
 		if h.s == s {

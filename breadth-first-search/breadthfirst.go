@@ -6,21 +6,26 @@ import (
 	"log"
 )
 
-func breadthSearch(graph map[string][]string, name string) bool {
+type human struct {
+	name       string
+	age        int
+	occupation string
+}
+
+func breadthSearch(graph map[human][]human, name human) bool {
 	q := queue.Init()
-	searched := []string{}
+	searched := []human{}
 	for _, p := range graph[name] {
 		q.EnQueue(p)
 		searched = append(searched, p)
 	}
 
-	var person string
-	var err error
 	for q.Length() != 0 {
-		person, err = q.DeQueue()
+		p, err := q.DeQueue()
 		if err != nil {
 			log.Fatal(err)
 		}
+		person, _ := p.(human)
 
 		if personIsSeller(person) {
 			fmt.Println("seller is", person)
@@ -38,7 +43,7 @@ func breadthSearch(graph map[string][]string, name string) bool {
 	return false
 }
 
-func isSearched(searched []string, person string) bool {
+func isSearched(searched []human, person human) bool {
 	for _, i := range searched {
 		if i == person {
 			return true
@@ -47,22 +52,18 @@ func isSearched(searched []string, person string) bool {
 	return false
 }
 
-// dummy function to pick someone that their name ends with 6
-// TODO: when the human type is implemented, this neends to be changed too
-func personIsSeller(person string) bool {
-	return person[len(person)-1] == '6'
+func personIsSeller(person human) bool {
+	return person.occupation == "seller"
 }
 
 func main() {
-	graph := make(map[string][]string)
-	graph["person1"] = []string{"person2", "person3", "person4", "person5"}
-	graph["person2"] = []string{"person5", "person12"}
-	graph["person3"] = []string{"person6"}
-	graph["person5"] = []string{"person4"}
+	graph := make(map[human][]human)
+	person1 := &human{name: "person 1", age: 30, occupation: "athlete"}
+	person2 := &human{name: "person 2", age: 20, occupation: "student"}
+	person3 := &human{name: "person 3", age: 25, occupation: "seller"}
+	graph[*person1] = []human{*person2}
+	graph[*person2] = []human{*person3}
 
-	fmt.Println(breadthSearch(graph, "person1"))
+	fmt.Println(breadthSearch(graph, *person1))
 
 }
-
-// TODO: Make the queue general for any type
-// TODO: define a type named human with name and occupation fileds and pass that object to the graph queue
