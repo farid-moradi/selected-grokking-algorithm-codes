@@ -31,13 +31,7 @@ func (g *graph) Print() {
 
 }
 
-// func (g *graph) PrintNeighbor(n *node) {
-// 	for _, edges := range g.gr[n] {
-// 		fmt.Println(edges.dst.name)
-// 	}
-// }
-
-func (g *graph) Dijkstra(start *node) *[]node {
+func (g *graph) Dijkstra(start *node) []*node {
 	costs := make(map[*node]float64)
 	parents := make(map[*node]*node)
 	infinity := math.Inf(1)
@@ -67,18 +61,18 @@ func (g *graph) Dijkstra(start *node) *[]node {
 		processed = append(processed, nodeCheck)
 		nodeCheck = findLowestCostNode(costs, processed)
 	}
-	fmt.Println("costs:")
-	for i, v := range costs {
-		fmt.Println(i.name, v)
-	}
-	fmt.Println("parents:")
-	for i, v := range parents {
-		if v != nil {
-			fmt.Println(i.name, v.name)
+
+	children := make(map[*node]*node)
+	for n := range parents {
+		if parents[n] != nil {
+			children[parents[n]] = n
 		}
 	}
-	// TODO
-	return nil
+	result := []*node{}
+	for n := start; n != nil; n = children[n] {
+		result = append(result, n)
+	}
+	return result
 }
 
 func findLowestCostNode(costs map[*node]float64, processed []*node) *node {
@@ -100,16 +94,6 @@ func findLowestCostNode(costs map[*node]float64, processed []*node) *node {
 	return lowestCostNode
 }
 
-// func (g *graph) Weigth(p *node, n *node) (uint, error) {
-// 	for _, e := range g.gr[p] {
-// 		if e.dst == n {
-// 			return e.w, nil
-// 		}
-// 	}
-// 	err := errors.New("not an edge")
-// 	return 0, err
-// }
-
 // this prints every single path from node n in a DAG
 func (g *graph) PrintAllThePathsNode(n *node, path []*node) {
 	if len(g.nodes[n]) == 0 {
@@ -126,15 +110,6 @@ func (g *graph) PrintAllThePathsNode(n *node, path []*node) {
 		g.PrintAllThePathsNode(nei, path)
 	}
 }
-
-// func (g *graph) IsParent(n *node, p *node) bool {
-// 	for _, t := range g.parents[n] {
-// 		if t == p {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
 
 type node struct {
 	name string
@@ -178,6 +153,10 @@ func main() {
 
 	// g.Print()
 	// g.PrintAllThePathsNode(start, nil)
-	g.Dijkstra(start)
+	path := g.Dijkstra(start)
+	for _, n := range path {
+		fmt.Printf("%s ", n.name)
+	}
+	fmt.Println()
 
 }
