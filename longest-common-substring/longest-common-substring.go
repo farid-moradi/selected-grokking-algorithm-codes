@@ -21,7 +21,6 @@ func longestCommonSubstring(s, t string) int {
 				}
 			}
 		}
-		fmt.Println(grid)
 	}
 	return longest
 }
