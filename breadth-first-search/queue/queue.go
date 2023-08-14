@@ -22,14 +22,12 @@ func newNode(s interface{}) *node {
 type queue struct {
 	head *node
 	tail *node
-	q    []node
 }
 
 func Init() *queue {
 	q := new(queue)
 	q.head = nil
 	q.tail = nil
-	q.q = make([]node, MAXIMUM_QUEUE_LENGTH)
 	return q
 }
 
