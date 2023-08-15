@@ -12,7 +12,6 @@ func main() {
 func countdown(i int) {
 	// fmt.Println(i)
 	if i == 0 {
-		// fmt.Println("done")
 		return
 	}
 	countdown(i - 1)

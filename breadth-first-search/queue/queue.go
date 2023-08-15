@@ -5,8 +5,6 @@ import (
 	"fmt"
 )
 
-const MAXIMUM_QUEUE_LENGTH = 100
-
 type node struct {
 	s    interface{}
 	next *node

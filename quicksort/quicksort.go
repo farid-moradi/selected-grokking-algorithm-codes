@@ -46,7 +46,7 @@ func quicksort(a []int) {
 	}
 
 	pivot := 0
-	// index is the index of the last bigger element before pivot
+	// index of the biggest element before pivot
 	index := 0
 	for i := pivot + 1; i < len(a); i++ {
 		if a[i] <= a[pivot] {
